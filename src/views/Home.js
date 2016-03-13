@@ -25,7 +25,7 @@ const Home = React.createClass({
       dataSource: null,
       items: [],
       filters: [],
-      height: 0,
+      textFocus: false,
       stream: 'all',
       body: ''
     }
@@ -104,18 +104,24 @@ const Home = React.createClass({
     }
   },
 
-  onScrollerContentSizeChange: function (newSize) {
-    console.warn(newSize)
-    this.setState({ height: newSize })
+  onInputFocus: function () {
+    this.setState({ inputFocus: true })
+  },
+
+  onInputBlur: function () {
+    this.setState({ inputFocus: false })
   },
 
   render: function () {
+    const availableHeight = this.props.height - (
+      this.state.inputFocus ? 150 : 0
+    )
     return (
       <View>
         <Feed
           auth={ this.props.auth }
           items={ this.state.items }
-          height={ this.props.height}
+          height={ availableHeight }
           styles={ styles }
           />
 
